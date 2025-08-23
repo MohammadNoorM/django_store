@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.sessions.models import Session
 
 
 class Category(models.Model):
@@ -39,7 +40,7 @@ class Product(models.Model):
 
 
 class Orders(models.Model):
-    custumer = models.JSONField(default=dict)
+    customer = models.JSONField(default=dict)
     total = models.FloatField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -53,6 +54,12 @@ class OrderItem(models.Model):
     product = models.ForeignKey(Product, on_delete=models.PROTECT)
     price = models.FloatField()
     created_at = models.DateTimeField(auto_now_add=True)
+
+
+class Cart(models.Model):
+    items = models.JSONField(default=dict)
+    session = models.ForeignKey(Session, on_delete=models.CASCADE)
+
 
 
 class Slider(models.Model):
